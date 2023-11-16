@@ -159,6 +159,7 @@ button:focus {
 }
 
 .auth-link{
+  color: #575791;
   text-decoration: none;
   font-size: 14px;
   cursor: pointer;
@@ -169,4 +170,28 @@ button:focus {
   cursor: pointer;
   font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.btnSignUp,
+.btnLogIn,
+.btnResetPassword{
+  background-color: #575791;
+}
+.btnSignUp:hover,
+.btnLogIn:hover,
+.btnResetPassword:hover{
+  background-color: #3c3c64;
+  font-weight: 600;
+}
+
+.password-field{
+  position: relative;
+}
+
+.password-toggle-icon{
+  position:absolute;
+  top: 5px;
+  left: 440px;
+  z-index: 1;
+  cursor: pointer;
 }

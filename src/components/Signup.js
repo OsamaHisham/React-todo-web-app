@@ -3,6 +3,10 @@ import React, { useRef, useState } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
+// React icons for password visibility
+import { Icon } from 'react-icons-kit'
+import {eyeOff} from 'react-icons-kit/feather/eyeOff'
+import {eye} from 'react-icons-kit/feather/eye'
 
 export default function Signup() {
   // ~~~~~~~~~~~ Variables ~~~~~~~~~~~
@@ -19,6 +23,12 @@ export default function Signup() {
   const [loading, setLoading] = useState(false)
   // To redirect to dashboard page
   const navigate = useNavigate()
+  // to deal with show/hide password states
+  const [mainPassType, setMainPassType] = useState('password')
+  const [mainPassIcon, setMainPassIcon] = useState(eyeOff)
+  const [PassConfType, setPassConfType] = useState('password')
+  const [PassConfIcon, setPassConfIcon] = useState(eyeOff)
+
 
   // ~~~~~~~~~~~ handleSubmit function ~~~~~~~~~~~
 
@@ -61,6 +71,29 @@ export default function Signup() {
     setLoading(false)
   }
 
+  // Function to handle the password toggle Icon
+  const handleMainPassToggle = () => {
+    // Check the type of input for main password
+    if (mainPassType === 'password'){
+      setMainPassIcon(eye)
+      setMainPassType('text')
+    } else {
+      setMainPassIcon(eyeOff)
+      setMainPassType('password')
+    }
+  }
+  // Function to handle the password toggle Icon
+  const handlePassConfToggle = () => {
+    // Check the type of input for confirm password
+    if (PassConfType === 'password'){
+      setPassConfIcon(eye)
+      setPassConfType('text')
+    } else {
+      setPassConfIcon(eyeOff)
+      setPassConfType('password')
+    }
+  }
+
   // ~~~~~~~~~~~ return part for the component ~~~~~~~~~~~
 
   return (
@@ -71,23 +104,33 @@ export default function Signup() {
           <Form onSubmit={handleSubmit}>
           {error && <Alert variant="danger">{error}</Alert>}
             <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
+              <Form.Label>Email*</Form.Label>
+              <Form.Control type="email" ref={emailRef} required placeholder='samDevelopment@example.com'/>
             </Form.Group>
             <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
+              <Form.Label className="mt-2">Password*</Form.Label>
+              <div className='password-field'>
+                <Form.Control type={mainPassType} ref={passwordRef}required />
+                <span className='password-toggle-icon' onClick={handleMainPassToggle}>
+                  <Icon icon={mainPassIcon}/>
+                </span>
+              </div>
             </Form.Group>
             <Form.Group id="password-confirm">
-              <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control type="password" ref={passwordConfirmRef} required />
+              <Form.Label className="mt-2">Password Confirmation*</Form.Label>
+              <div className='password-field'>
+                <Form.Control type={PassConfType} ref={passwordConfirmRef} required />
+                <span className='password-toggle-icon' onClick={handlePassConfToggle}>
+                  <Icon icon={PassConfIcon}/>
+                </span>
+              </div>
             </Form.Group>
-            <Button disabled={loading} className="w-100 mt-4" type="submit">Sign Up</Button>
+            <Button disabled={loading} className="w-100 mt-4 btnSignUp" type="submit">Sign Up</Button>
           </Form>
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
-        Already have an account? <Link to="/login" className='auth-link'>Login In</Link> 
+        Already have an account? <Link to="/login" className='auth-link'>Log In</Link> 
       </div>
     </>
   )

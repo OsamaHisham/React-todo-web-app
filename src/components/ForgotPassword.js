@@ -55,10 +55,10 @@ export default function ForgotPassword() {
           {message && <Alert variant="success">{message}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
+              <Form.Label>Email*</Form.Label>
               <Form.Control type="email" ref={emailRef} required />
             </Form.Group>
-            <Button disabled={loading} className="w-100 mt-4" type="submit">Reset Password</Button>
+            <Button disabled={loading} className="w-100 mt-4 btnResetPassword" type="submit">Reset Password</Button>
           </Form>
           {/* redirection to login page */}
           <div className='w-100 text-center mt-3'>

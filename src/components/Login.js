@@ -1,8 +1,15 @@
 // imports for libraries used
 import React, { useRef, useState } from 'react'
+// React Bootstrap components
 import { Form, Button, Card, Alert } from 'react-bootstrap'
+// Authentication fro AuthContext.js components
 import { useAuth } from '../contexts/AuthContext'
+// Handling Routing/Navigation 
 import { Link, useNavigate } from 'react-router-dom'
+// React icons for password visibility
+import { Icon } from 'react-icons-kit'
+import {eyeOff} from 'react-icons-kit/feather/eyeOff'
+import {eye} from 'react-icons-kit/feather/eye'
 
 export default function Login() {
   // ~~~~~~~~~~~ Variables ~~~~~~~~~~~
@@ -18,6 +25,9 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   // To redirect to dashboard page
   const navigate = useNavigate()
+  // to deal with show/hide password states
+  const [passType, setPassType] = useState('password')
+  const [passIcon, setPassIcon] = useState(eyeOff)
 
   // ~~~~~~~~~~~ handleSubmit function ~~~~~~~~~~~
 
@@ -35,7 +45,7 @@ export default function Login() {
       // calling the signup function
       await login(emailRef.current.value, passwordRef.current.value)
       // Successful login
-      navigate('/todo')
+      navigate('/')
     } catch(err){
       // In case the email is not verified first
       if (err.message === 'Email not verified. Please check your email for a verification link.'){
@@ -50,6 +60,19 @@ export default function Login() {
     setLoading(false)
   }
 
+  // Function to handle the password toggle Icon
+  const handlePassToggle = () => {
+    // Check the type of input
+    if (passType === 'password'){
+      setPassIcon(eye)
+      setPassType('text')
+    } else {
+      setPassIcon(eyeOff)
+      setPassType('password')
+    }
+
+  } 
+
   // ~~~~~~~~~~~ return part for the component ~~~~~~~~~~~
 
   return (
@@ -61,14 +84,19 @@ export default function Login() {
           {/* Form for submitting user login credentials*/}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
+              <Form.Label>Email*</Form.Label>
+              <Form.Control type="email" ref={emailRef} placeholder='SamDevelopment@example.com' required/>
             </Form.Group>
             <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
+              <Form.Label>Password*</Form.Label>
+              <div className='password-field'>
+                <Form.Control type={passType} ref={passwordRef} secureTextEntry={false} required/>
+                <span className='password-toggle-icon' onClick= {handlePassToggle}>
+                  <Icon icon={passIcon}/>
+                </span>
+              </div>
             </Form.Group>
-            <Button disabled={loading} className="w-100 mt-4" type="submit">Log In</Button>
+            <Button disabled={loading} className="w-100 mt-4 btnLogIn" type="submit">Log In</Button>
           </Form>
           {/* Forgetten Password section */}
           <div className='w-100 text-center mt-2'>

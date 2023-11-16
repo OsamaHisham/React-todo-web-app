@@ -46,6 +46,7 @@ npm i react-router-dom
 npm install @mui/icons-material
 npm install @emotion/styled
 npm install @emotion/react
+npm install --save react-icons-kit
 ```
 
 - Local environment setup *( .env.local )* :<br>

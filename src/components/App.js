@@ -136,7 +136,7 @@ function App() {
               <Route path="/forgot-password" element={<ForgotPassword/>} />
               {/* Private routes to prevent the user from accessing without being loged in */}
               <Route element={<PrivateRoute/>}>
-                <Route path="/todo" element={<TodoDashboard />} />
+                <Route path="/" element={<TodoDashboard />} />
               </Route>
             </Routes>
           </AuthProvider>
